@@ -9,6 +9,8 @@ import { UserModule } from './modules/user/user.module';
 import { CachedbModule } from './modules/cachedb/cachedb.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { HashModule } from './modules/hash/hash.module';
+import { CityModule } from './modules/city/city.module';
+import { AddressModule } from './modules/address/address.module';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { HashModule } from './modules/hash/hash.module';
     UserModule,
     CachedbModule,
     HashModule,
+    CityModule,
+    AddressModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService, UserService],

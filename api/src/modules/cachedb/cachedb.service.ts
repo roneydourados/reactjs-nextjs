@@ -17,4 +17,8 @@ export class CachedbService {
 
     return dataDb;
   }
+
+  async clear(): Promise<void> {
+    await this.cacheManager.reset();
+  }
 }

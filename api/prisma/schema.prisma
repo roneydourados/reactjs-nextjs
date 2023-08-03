@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,15 +8,39 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  email      String   @unique @db.VarChar(300)
-  name       String   @db.VarChar(100)
-  phone      String   @db.VarChar(20)
-  cpf        String   @unique @db.VarChar(20)
-  password   String
-  type       Int      @default(1)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  email     String    @unique @db.VarChar(300)
+  name      String    @db.VarChar(100)
+  phone     String    @db.VarChar(20)
+  cpf       String    @unique @db.VarChar(20)
+  password  String
+  type      Int       @default(1)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  Address   Address[]
 
   @@map("users")
+}
+
+model City {
+  id      Int       @id @default(autoincrement())
+  name    String    @db.VarChar(80)
+  state   String    @db.Char(2)
+  Address Address[]
+
+  @@map("city")
+}
+
+model Address {
+  id         Int    @id @default(autoincrement())
+  userId     Int    @map("user_id")
+  cityId     Int    @map("city_id")
+  street     String @db.VarChar(100)
+  complement String @db.VarChar(100)
+  number     String @db.VarChar(10)
+  cep        String @db.VarChar(10)
+  city       City   @relation(fields: [cityId], references: [id])
+  user       User   @relation(fields: [userId], references: [id])
+
+  @@map("address")
 }

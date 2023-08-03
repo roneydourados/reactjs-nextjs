@@ -19,18 +19,26 @@ export class UserRepository implements UserRepositoryDTO {
       this.db.user.findMany(),
     );
   }
+
   async show(id: number): Promise<UserDTO> {
     return this.exists(id);
   }
-  async create(data: UserDTO, role?: Role): Promise<UserDTO> {
+
+  async create(data: UserDTO): Promise<UserDTO> {
     data.password = await this.hash.hashText(data.password);
+
+    // limpar o cache
+    await this.cacheService.clear();
 
     return this.db.user.create({
       data,
     });
   }
 
-  async update(id: number, data: UserDTO, role?: Role): Promise<UserDTO> {
+  async update(id: number, data: UserDTO): Promise<UserDTO> {
+    // limpar o cache
+    await this.cacheService.clear();
+
     await this.exists(id);
 
     return this.db.user.update({
@@ -41,6 +49,9 @@ export class UserRepository implements UserRepositoryDTO {
     });
   }
   async delete(id: number): Promise<void> {
+    // limpar o cache
+    await this.cacheService.clear();
+
     await this.exists(id);
 
     await this.db.user.delete({

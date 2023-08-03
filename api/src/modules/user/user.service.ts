@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { UserRepositoryDTO } from './repository/user.repository.dto';
-import { Role } from 'src/enums/role.enum';
 import { UserDTO } from './dtos/user.dto';
 import { UserRepository } from './repository/user.repository';
 
 @Injectable()
-export class UserService implements UserRepositoryDTO {
+export class UserService {
   constructor(private readonly userRepsitory: UserRepository) {}
 
   async list(): Promise<UserDTO[]> {
@@ -16,11 +14,11 @@ export class UserService implements UserRepositoryDTO {
     return this.userRepsitory.show(id);
   }
 
-  async create(data: UserDTO, role?: Role): Promise<UserDTO> {
+  async create(data: UserDTO): Promise<UserDTO> {
     return this.userRepsitory.create(data);
   }
 
-  async update(id: number, data: UserDTO, role?: Role): Promise<UserDTO> {
+  async update(id: number, data: UserDTO): Promise<UserDTO> {
     return this.userRepsitory.update(id, data);
   }
 
