@@ -6,7 +6,6 @@ import {
   Param,
   Post,
   Put,
-  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDTO } from './dtos/user.dto';
