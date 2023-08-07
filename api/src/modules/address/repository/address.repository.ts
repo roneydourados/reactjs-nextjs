@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { AddressRepositoryDTO } from './address.repository.dto';
-import { PrismaService } from 'src/modules/prisma/prisma.service';
-import { CachedbService } from 'src/modules/cachedb/cachedb.service';
+import { PrismaService } from 'src/providers/prisma/prisma.service';
 import { AddressDTO } from '../dtos/address.dto';
+import { CachedbService } from 'src/providers/cachedb/cachedb.service';
 
 @Injectable()
 export class AddressRepository implements AddressRepositoryDTO {

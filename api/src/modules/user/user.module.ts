@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
-import { HashModule } from '../hash/hash.module';
 import { UserRepository } from './repository/user.repository';
 import { UserService } from './user.service';
-import { CachedbModule } from '../cachedb/cachedb.module';
-import { PrismaModule } from '../prisma/prisma.module';
+import { PrismaModule } from '../../providers/prisma/prisma.module';
+import { HashModule } from 'src/providers/hash/hash.module';
+import { CachedbModule } from 'src/providers/cachedb/cachedb.module';
 
 @Module({
   controllers: [UserController],

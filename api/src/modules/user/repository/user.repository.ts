@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CachedbService } from 'src/modules/cachedb/cachedb.service';
-import { PrismaService } from 'src/modules/prisma/prisma.service';
-import { HashService } from 'src/modules/hash/hash.service';
+import { PrismaService } from 'src/providers/prisma/prisma.service';
 import { UserRepositoryDTO } from './user.repository.dto';
 import { UserDTO } from '../dtos/user.dto';
+import { CachedbService } from 'src/providers/cachedb/cachedb.service';
+import { HashService } from 'src/providers/hash/hash.service';
 
 @Injectable()
 export class UserRepository implements UserRepositoryDTO {
