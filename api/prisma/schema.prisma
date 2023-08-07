@@ -17,8 +17,10 @@ model User {
   type      Int       @default(1)
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
-  Address   Address[]
+  address   Address[]
 
+  @@index([name])
+  @@index([email])
   @@map("users")
 }
 
@@ -26,8 +28,9 @@ model City {
   id      Int       @id @default(autoincrement())
   name    String    @db.VarChar(80)
   state   String    @db.Char(2)
-  Address Address[]
+  address Address[]
 
+  @@index([name])
   @@map("city")
 }
 
@@ -43,4 +46,27 @@ model Address {
   user       User   @relation(fields: [userId], references: [id])
 
   @@map("address")
+}
+
+model Category {
+  id           Int       @id @default(autoincrement())
+  categoryName String    @map("category_name") @db.VarChar(80)
+  proucts      Product[]
+
+  @@index([categoryName])
+  @@map("category")
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  productName String   @map("product_name") @db.VarChar(100)
+  categoryId  Int      @map("category_id")
+  category    Category @relation(fields: [categoryId], references: [id])
+  ammount     Decimal  @db.Decimal(18, 2)
+  photo       String   @db.VarChar(500)
+  description String   @db.Text()
+
+  @@index([productName])
+  @@index([categoryId])
+  @@map("product")
 }
