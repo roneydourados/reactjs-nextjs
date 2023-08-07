@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Role } from 'src/enums/role.enum';
 import { CachedbService } from 'src/modules/cachedb/cachedb.service';
 import { PrismaService } from 'src/modules/prisma/prisma.service';
 import { HashService } from 'src/modules/hash/hash.service';
@@ -25,10 +24,10 @@ export class UserRepository implements UserRepositoryDTO {
   }
 
   async create(data: UserDTO): Promise<UserDTO> {
-    data.password = await this.hash.hashText(data.password);
-
     // limpar o cache
     await this.cacheService.clear();
+
+    data.password = await this.hash.hashText(data.password);
 
     return this.db.user.create({
       data,
