@@ -26,12 +26,12 @@ export class AddressController {
   }
 
   @Put(':id')
-  async update(@Body() data: AddressDTO, @Param() params: any) {
-    return this.addressService.update(Number(params.id), data);
+  async update(@Body() data: AddressDTO, @Param() { id }) {
+    return this.addressService.update(Number(id), data);
   }
 
   @Delete(':id')
-  async destroy(@Param() params: any) {
-    await this.addressService.delete(Number(params.id));
+  async destroy(@Param() { id }) {
+    await this.addressService.delete(Number(id));
   }
 }

@@ -16,7 +16,7 @@ export class CityController {
   constructor(private readonly cityService: CityService) {}
 
   @Get()
-  async index(@Query() state: string) {
+  async index(@Query() { state }) {
     return this.cityService.list(state);
   }
 
@@ -26,12 +26,12 @@ export class CityController {
   }
 
   @Put(':id')
-  async update(@Body() data: CityDTO, @Param() params: any) {
-    return this.cityService.update(Number(params.id), data);
+  async update(@Body() data: CityDTO, @Param() { id }) {
+    return this.cityService.update(Number(id), data);
   }
 
   @Delete(':id')
-  async destroy(@Param() params: any) {
-    await this.cityService.delete(Number(params.id));
+  async destroy(@Param() { id }) {
+    await this.cityService.delete(Number(id));
   }
 }

@@ -25,12 +25,12 @@ export class UserController {
   }
 
   @Put(':id')
-  async update(@Body() data: UserDTO, @Param() params: any) {
-    return this.userService.update(Number(params.id), data);
+  async update(@Body() data: UserDTO, @Param() { id }) {
+    return this.userService.update(Number(id), data);
   }
 
   @Delete(':id')
-  async destroy(@Param() params: any) {
-    await this.userService.delete(Number(params.id));
+  async destroy(@Param() { id }) {
+    await this.userService.delete(Number(id));
   }
 }
