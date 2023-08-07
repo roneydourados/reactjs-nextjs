@@ -12,7 +12,7 @@ export class CityRepository implements CityRepositoryDTO {
   ) {}
 
   async list(state: string): Promise<CityDTO[]> {
-    return this.cacheService.get<CityDTO[]>('CityDTO[]', () =>
+    return this.cacheService.get<CityDTO[]>(`CityDTO[]-${state}`, () =>
       this.db.city.findMany({
         where: {
           state,
