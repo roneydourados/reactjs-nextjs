@@ -61,16 +61,16 @@ export class CityRepository implements CityRepositoryDTO {
   }
 
   async exists(id: number): Promise<CityDTO> {
-    const city = await this.db.city.findUnique({
+    const returnData = await this.db.city.findUnique({
       where: {
         id,
       },
     });
 
-    if (!city) {
+    if (!returnData) {
       throw new NotFoundException(`Nenhum dado encontrado com id: ${id}`);
     }
 
-    return city;
+    return returnData;
   }
 }

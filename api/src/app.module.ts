@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './modules/prisma/prisma.service';
 import { PrismaModule } from './modules/prisma/prisma.module';
@@ -26,7 +24,7 @@ import { AddressModule } from './modules/address/address.module';
     CityModule,
     AddressModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, PrismaService, UserService],
+  controllers: [],
+  providers: [PrismaService, UserService],
 })
 export class AppModule {}

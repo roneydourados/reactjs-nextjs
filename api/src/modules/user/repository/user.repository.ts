@@ -61,16 +61,16 @@ export class UserRepository implements UserRepositoryDTO {
   }
 
   async exists(id: number): Promise<UserDTO> {
-    const user = await this.db.user.findUnique({
+    const returnData = await this.db.user.findUnique({
       where: {
         id,
       },
     });
 
-    if (!user) {
+    if (!returnData) {
       throw new NotFoundException(`Nenhum dado encontrado com id: ${id}`);
     }
 
-    return user;
+    return returnData;
   }
 }
