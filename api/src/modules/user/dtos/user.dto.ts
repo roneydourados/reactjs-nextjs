@@ -11,7 +11,7 @@ import { Role } from 'src/enums/role.enum';
 export class UserDTO {
   @IsOptional()
   @IsNumber()
-  id?: number;
+  id: number;
 
   @IsString()
   name: string;
@@ -25,6 +25,7 @@ export class UserDTO {
   @IsEmail()
   email: string;
 
+  @IsOptional()
   @IsStrongPassword({
     minLength: 6,
     minLowercase: 0,
