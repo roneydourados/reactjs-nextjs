@@ -9,13 +9,13 @@ import { HashService } from 'src/providers/hash/hash.service';
 export class UserRepository implements UserRepositoryDTO {
   constructor(
     private readonly cacheService: CachedbService,
-    private readonly db: PrismaService,
-    private readonly hash: HashService,
+    private readonly dbService: PrismaService,
+    private readonly hashService: HashService,
   ) {}
 
   async list(): Promise<UserDTO[]> {
     return this.cacheService.get<UserDTO[]>('UserDTO[]', () =>
-      this.db.user.findMany(),
+      this.dbService.user.findMany(),
     );
   }
 
@@ -27,9 +27,9 @@ export class UserRepository implements UserRepositoryDTO {
     // limpar o cache
     await this.cacheService.clear();
 
-    data.password = await this.hash.hashText(data.password);
+    data.password = await this.hashService.hashText(data.password);
 
-    return this.db.user.create({
+    return this.dbService.user.create({
       data,
     });
   }
@@ -40,7 +40,7 @@ export class UserRepository implements UserRepositoryDTO {
 
     await this.exists(id);
 
-    return this.db.user.update({
+    return this.dbService.user.update({
       data,
       where: {
         id,
@@ -53,7 +53,7 @@ export class UserRepository implements UserRepositoryDTO {
 
     await this.exists(id);
 
-    await this.db.user.delete({
+    await this.dbService.user.delete({
       where: {
         id,
       },
@@ -61,7 +61,7 @@ export class UserRepository implements UserRepositoryDTO {
   }
 
   async exists(id: number): Promise<UserDTO> {
-    const returnData = await this.db.user.findUnique({
+    const returnData = await this.dbService.user.findUnique({
       where: {
         id,
       },

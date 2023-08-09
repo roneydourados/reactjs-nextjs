@@ -7,13 +7,13 @@ import { CachedbService } from 'src/providers/cachedb/cachedb.service';
 @Injectable()
 export class AddressRepository implements AddressRepositoryDTO {
   constructor(
-    private readonly db: PrismaService,
+    private readonly dbService: PrismaService,
     private readonly cacheService: CachedbService,
   ) {}
 
   async list(userId: number): Promise<AddressDTO[]> {
     return this.cacheService.get<AddressDTO[]>(`AddressDTO[]-${userId}`, () =>
-      this.db.address.findMany({
+      this.dbService.address.findMany({
         where: {
           userId,
         },
@@ -36,7 +36,7 @@ export class AddressRepository implements AddressRepositoryDTO {
     // limpar o cache
     await this.cacheService.clear();
 
-    return this.db.address.create({
+    return this.dbService.address.create({
       data: {
         cep,
         complement,
@@ -54,7 +54,7 @@ export class AddressRepository implements AddressRepositoryDTO {
 
     await this.exists(id);
 
-    return this.db.address.update({
+    return this.dbService.address.update({
       data,
       where: {
         id,
@@ -67,7 +67,7 @@ export class AddressRepository implements AddressRepositoryDTO {
 
     await this.exists(id);
 
-    await this.db.address.delete({
+    await this.dbService.address.delete({
       where: {
         id,
       },
@@ -75,7 +75,7 @@ export class AddressRepository implements AddressRepositoryDTO {
   }
 
   async exists(id: number): Promise<AddressDTO> {
-    const returnData = await this.db.address.findUnique({
+    const returnData = await this.dbService.address.findUnique({
       where: {
         id,
       },

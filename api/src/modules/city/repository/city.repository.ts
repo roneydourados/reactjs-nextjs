@@ -7,13 +7,13 @@ import { CachedbService } from 'src/providers/cachedb/cachedb.service';
 @Injectable()
 export class CityRepository implements CityRepositoryDTO {
   constructor(
-    private readonly db: PrismaService,
+    private readonly dbService: PrismaService,
     private readonly cacheService: CachedbService,
   ) {}
 
   async list(state: string): Promise<CityDTO[]> {
     return this.cacheService.get<CityDTO[]>(`CityDTO[]-${state}`, () =>
-      this.db.city.findMany({
+      this.dbService.city.findMany({
         where: {
           state,
         },
@@ -29,7 +29,7 @@ export class CityRepository implements CityRepositoryDTO {
     // limpar o cache
     await this.cacheService.clear();
 
-    return this.db.city.create({
+    return this.dbService.city.create({
       data,
     });
   }
@@ -40,7 +40,7 @@ export class CityRepository implements CityRepositoryDTO {
 
     await this.exists(id);
 
-    return this.db.city.update({
+    return this.dbService.city.update({
       data,
       where: {
         id,
@@ -53,7 +53,7 @@ export class CityRepository implements CityRepositoryDTO {
 
     await this.exists(id);
 
-    await this.db.city.delete({
+    await this.dbService.city.delete({
       where: {
         id,
       },
@@ -61,7 +61,7 @@ export class CityRepository implements CityRepositoryDTO {
   }
 
   async exists(id: number): Promise<CityDTO> {
-    const returnData = await this.db.city.findUnique({
+    const returnData = await this.dbService.city.findUnique({
       where: {
         id,
       },
